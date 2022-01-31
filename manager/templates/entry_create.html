@@ -1,14 +1,17 @@
 {% extends 'base.html' %} 
+{% load crispy_forms_tags %}
+
 {% block content %}
 
 <div class="container">
   <div class="row">
     <div class="col-md-8 left">
       <div class="card my-4">
-        <div class="card-body">
-          <h1>{% block title %} {{ entry.word }} {% endblock title %}</h1>
-          <p class="card-text text-muted h6">Dodano - {{ entry.created_at }} </p>
-          <p class="card-text text-justify">{{ entry.definition}}</p>
+        <div class="col-md-12 mt-4 mb-4">
+          <form method="post">{% csrf_token %}
+            {{ form|crispy }}
+            <input class="btn btn-dark" type="submit" value="Dodaj">
+          </form>
         </div>
       </div>
     </div>

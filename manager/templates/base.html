@@ -14,6 +14,35 @@
     </head>
 
     <body>
+        <header class="masthead">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row">
+                    <div class=" col-md-12 col-md-12">
+                        <nav class="navbar navbar-expand-lg navbar-dark">
+                            <a class="navbar-brand" href="{% url 'manager:index' %}">Encyklopedia</a>
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                              <ul class="navbar-nav mr-auto">
+                                <li class="nav-item">
+                                  <a class="nav-link" href="{% url 'manager:entry-create' %}">Dodaj hasło i definicję</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'manager:popular-entries' %}">Najpopularniejsze hasła</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'manager:all-entries' %}">Wszystkie hasła</a>
+                                </li>
+                              </ul>
+                              <form method = "GET" action="{% url 'manager:index' %}" class="form-inline my-2 my-lg-0">
+                                <input name="q" value = "{{ request.GET.q }}"class="form-control mr-sm-2" type="search" placeholder="Szukaj hasła.." aria-label="Search">
+                                <button class="btn btn-outline-light" type="submit">Szukaj</button>
+                              </form>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
         {% block content %}
 
         {% endblock content %}

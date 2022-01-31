@@ -8,11 +8,11 @@ body {
 }
 .btn-danger {
     color: #fff;
-    background-color: #2d8659;
-    border-color: #26734d;
+    background-color: #007bff;
+    border-color: #007bff;
 }
 .masthead {
-    background: #339966;
+    background: #007bff;
     height: auto;
     padding-bottom: 15px;
     box-shadow: 0 16px 48px #E3E7EB;

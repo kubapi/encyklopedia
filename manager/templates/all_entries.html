@@ -1,34 +1,5 @@
 {% extends "base.html" %} 
 {% block content %}
-<header class="masthead">
-    <div class="overlay"></div>
-    <div class="container">
-        <div class="row">
-            <div class=" col-md-12 col-md-12">
-                <nav class="navbar navbar-expand-lg navbar-dark">
-                    <a class="navbar-brand" href="{% url 'index' %}">Encyklopedia</a>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                      <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                          <a class="nav-link" href="#">Dodaj hasło i definicję</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'popular-entries' %}">Najpopularniejsze hasła</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'all-entries' %}">Wszystkie hasła</a>
-                        </li>
-                      </ul>
-                      <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Szukaj hasła.." aria-label="Search">
-                        <button class="btn btn-outline-light" type="submit">Szukaj</button>
-                      </form>
-                    </div>
-                </nav>
-            </div>
-        </div>
-    </div>
-</header>
 
 <div class="container">
     <div class="row">
@@ -37,14 +8,53 @@
             <div class="card my-4">
                 <div class="card-body">
                     <h2 class="card-title">{{ entry.word }}</h2>
-                    <p class="card-text text-muted h6">Autor - {{ entry.author }} | Dodano - {{ entry.created_at }} </p>
+                    <p class="card-text text-muted h6">Dodano - {{ entry.created_at }} </p>
                     <p class="card-text">{{entry.definition|slice:":200" }}...</p>
-                    <a href="{% url 'entry-detail' entry.slug  %}" class="btn btn-primary">Zobacz &rarr;</a>
+                    <a href="{% url 'manager:entry-detail' entry.slug  %}" class="btn btn-primary">Zobacz &rarr;</a>
                 </div>
             </div>
             {% endfor %}
         </div>
         {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
     </div>
+    
+    {% if is_paginated %}
+    <div class="row">
+        <div class="col-md-8">
+            <ul class="pagination ">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link" >&laquo;</span>
+                </li>
+                {% endif %}
+                {% for i in paginator.page_range %}
+                {% if page_obj.number == i %}
+                    <li class="page-item active">
+                        <span class="page-link" >{{ i }} <span class="sr-only">(current)</span></span>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                    </li>
+                {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                    <span class="page-link" >&raquo;</span>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    {% endif %}
 </div>
+
 {% endblock %}

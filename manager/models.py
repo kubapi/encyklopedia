@@ -1,5 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.urls import reverse
+from django.template.defaultfilters import slugify
 
 STATUS = (
     (0,"Draft"),
@@ -8,8 +9,7 @@ STATUS = (
 
 class Entry(models.Model):
     word = models.CharField(max_length=300, unique=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='entries')
-    slug = models.CharField(max_length=50, unique=True)
+    slug = models.SlugField(blank = True, unique = True)
     definition = models.TextField()
     status = models.IntegerField(choices=STATUS, default=0)
     
@@ -24,3 +24,11 @@ class Entry(models.Model):
 
     def __str__(self):
         return self.word
+    
+    def get_absolute_url(self):
+        return reverse('manager:entry-detail', args=[self.slug])
+
+    def save(self, *args, **kwargs):
+        if not self.id or not self.slug:
+            self.slug = slugify(self.word)
+        super(Entry, self).save(*args, **kwargs)
