@@ -13,6 +13,8 @@ class Entry(models.Model):
     definition = models.TextField()
     status = models.IntegerField(choices=STATUS, default=0)
     
+    search_count = models.IntegerField(default= 0)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

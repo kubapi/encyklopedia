@@ -1,12 +1,42 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} 
+{% block content %}
+<header class="masthead">
+  <div class="overlay"></div>
+  <div class="container">
+      <div class="row">
+          <div class=" col-md-12 col-md-12">
+              <nav class="navbar navbar-expand-lg navbar-dark">
+                  <a class="navbar-brand" href="{% url 'index' %}">Encyklopedia</a>
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                      <li class="nav-item">
+                        <a class="nav-link" href="#">Dodaj hasło i definicję</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="{% url 'popular-entries' %}">Najpopularniejsze hasła</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="{% url 'all-entries' %}">Wszystkie hasła</a>
+                      </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                      <input class="form-control mr-sm-2" type="search" placeholder="Szukaj hasła.." aria-label="Search">
+                      <button class="btn btn-outline-light" type="submit">Szukaj</button>
+                    </form>
+                  </div>
+              </nav>
+          </div>
+      </div>
+  </div>
+</header>
 
 <div class="container">
   <div class="row">
     <div class="col-md-8 card mb-4 my-4 left top">
       <div class="card-body">
         <h1>{% block title %} {{ entry.word }} {% endblock title %}</h1>
-        <p class=" text-muted">{{ entry.author }} | {{ entry.created_at }}</p>
-        <p class="card-text ">{{ entry.definition | safe }}</p>
+        <p class="card-text text-muted h6">Autor - {{ entry.author }} | Dodano - {{ entry.created_at }} </p>
+        <p class="card-text text-justify">{{ entry.definition}}</p>
       </div>
     </div>
     {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
